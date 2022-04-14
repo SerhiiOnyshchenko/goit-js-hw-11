@@ -1,3 +1,9 @@
+@import "simplelightbox/dist/simple-lightbox.min.css";
+:root {
+	--timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+	--animation-duration: 250ms;
+}
+
 .selector {
 	position: absolute;
 	clip: rect(1px, 1px, 1px, 1px);
@@ -7,7 +13,6 @@
 	width: 1px;
 	overflow: hidden;
 }
-
 
 .search-form {
 	display: flex;
@@ -24,7 +29,7 @@
 	border-radius: 5px;
 	background: #fff;
 }
-.box-form input{
+.box-form input {
 	margin-left: 5px;
 }
 
@@ -42,33 +47,51 @@
 
 .gallery {
 	display: grid;
-	gap: 10px;
-	grid-template-columns: repeat(4, 1fr);
-margin: 5px;
+	max-width: 1240px;
+	grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+	grid-gap: 12px;
+	justify-content: center;
+	margin: 20px auto;
+}
+.gallery a{
+	color: inherit;
+}
+.gallery__image:hover {
+	transform: scale(1.03);
 }
 
-.photo-card{
+.gallery__image {
+	width: 100%;
+	object-fit: cover;
+	transition: transform var(--animation-duration) var(--timing-function);
+}
+
+.photo-card {
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
 	align-items: center;
 	border: 1px solid #000;
 }
-.info{
+.info {
 	display: flex;
 	justify-content: center;
 	align-items: center;
 }
-.info-item{
-	margin: 0 5px;
-	display: flex;flex-direction: column;align-items: center;
+.info-item {
+	margin: 5px 5px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 }
 
-.load-more{
+.load-more {
 	display: block;
 	margin: 20px auto;
 	background-color: rgb(25, 4, 99);
 	color: #fff;
-	height: 40px;width: 150px;
+	height: 40px;
+	width: 150px;
 	border-radius: 5px;
 }
+
