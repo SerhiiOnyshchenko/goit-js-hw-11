@@ -1,18 +1,19 @@
 import Notiflix from 'notiflix';
 import API from './js/fetchCountries';
 import SimpleLightbox from 'simplelightbox';
+import LoadMoreBtn from './js/lode-more-btn';
 
 const refs = {
    input: document.querySelector('[name="searchQuery"]'),
    form: document.querySelector('#search-form'),
    btn: document.querySelector('[type="submit"]'),
    divImages: document.querySelector('.gallery'),
-   loadMore: document.querySelector('.load-more'),
+   // loadMore: document.querySelector('.load-more'),
 };
-
+const LoadeMoreBtn = new LoadMoreBtn({ selector: '.load-more' });
 let countPage = 1;
 let totalHits;
-const per_page = 20;
+const per_page = 10;
 let allCards;
 
 async function apiAndRender() {
@@ -27,25 +28,30 @@ refs.form.addEventListener('click', async evt => {
    countPage = 1;
    if (evt.target.type === 'submit') {
       refs.divImages.innerHTML = '';
+      LoadeMoreBtn.show();
+      LoadeMoreBtn.disable();
       await apiAndRender();
-      Notiflix.Notify.success(`Hooray! We found ${totalHits} images.`);
-      if (totalHits >= allCards.length + per_page) {
-         refs.loadMore.classList.remove('selector');
+      LoadeMoreBtn.enable();
+      if (totalHits <= allCards.length + per_page) {
+         LoadeMoreBtn.hide();
+         // refs.loadMore.classList.remove('is-hidden');
       }
       createGallerySimplelightbox();
    }
 });
 // load more cards
-refs.loadMore.addEventListener('click', async evt => {
+LoadeMoreBtn.refs.button.addEventListener('click', async evt => {
    evt.preventDefault();
    countPage += 1;
+   LoadeMoreBtn.disable();
    await apiAndRender();
+   LoadeMoreBtn.enable();
    if (totalHits === allCards.length) {
-      refs.loadMore.classList.add('selector');
+      LoadeMoreBtn.hide();
       Notiflix.Notify.info("We're sorry, but you've reached the end of search results.");
    }
-	refreshGallerySimplelightbox();
-	scrollSlowly()
+   refreshGallerySimplelightbox();
+   scrollSlowly();
 });
 
 // render function
@@ -54,6 +60,7 @@ function renderListImage(images) {
    if (!images.hits.length) {
       throw new Error();
    }
+   Notiflix.Notify.success(`Hooray! We found ${totalHits} images.`);
    if (images.hits.length) {
       const markup = images.hits
          .map(image => {

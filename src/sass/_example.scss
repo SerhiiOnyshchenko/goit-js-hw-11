@@ -4,7 +4,11 @@
 	--animation-duration: 250ms;
 }
 
-.selector {
+.example{
+	padding-bottom: 30px;
+}
+
+.is-hidden {
 	position: absolute;
 	clip: rect(1px, 1px, 1px, 1px);
 	padding: 0;
