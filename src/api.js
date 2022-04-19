@@ -36,7 +36,7 @@ refs.form.addEventListener('click', async evt => {
          Notiflix.Notify.success(`Hooray! We found ${totalHits} images.`);
       }
       LoadeMoreBtn.enable();
-      if (totalHits <= allCards.length + per_page) {
+      if (totalHits <= allCards.length) {
          LoadeMoreBtn.hide();
          if (allCards.length) {
             setTimeout(() => {
